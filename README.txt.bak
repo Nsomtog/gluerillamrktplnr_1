@@ -1,0 +1,117 @@
+Okay so I need to use gluestack.ui for the ui
+
+this will be a react native app 
+
+created with expo 
+
+expo / native / apis to install:
+
+react-native-gesture-handler
+expo-dev-client
+expo-background-fetch
+expo-calander
+expo-camera
+react-native-view-shot (could be useful for signing contracts, directly in app. create a signature box that uses full screen. then remove background after button push, then use captureRef {imported by reactnativeviewshot} and then you can reference the capture on the document.)
+expo-checkbox
+expo-clipboard
+expo-constants (not sure how or why this would be needed, but it gives system info that remains constant throughout the life of the install. device info etc. assuming used to speed up things. or analytics on the backend.)
+maybe *{expo-Crypto}
+@react-native-community/datetimepicker (could be used to schedule unavailability days and times for contractors.)
+expo-device
+expo-document-picker (for uploading photos taken outside of the app for any issues.) maybe expo-file-system
+react-native-gesture-handler
+expo-haptics
+expo-image
+expo-image-picker
+expo-intent-launcher used to adjust settings inside android. for instance popping users straight to location settings, or notification settings. 
+expo-keep-awake may be good to use for photouploads? or maybe a quick fix for any issues that you run into with file uploading in the background.
+(maybe) expo-linear-gradient I may use tamagui so may not need this for UI 
+expo-linking can be used for linking with other installed apps using deep links
+expo-local-authentication !!!!!! this is important, its for faceid and the fingerprint scanner. good for quick sign in
+expo-location android and ios have different names
+expo-mail-composer for admin contacts or for sending emails to me (Developer)
+expo-manifest
+react-native-maps
+expo-media-library
+@react-native-community/netinfo
+expo-network
+expo-notifications (push)
+@react-native-picker/picker
+"router UI" expo-router
+react-native-safe-area-context
+expo-secure-store (to be used to store boolean information such as wether or not face ID can be used)
+ @react-native-community/slider
+ expo-sms
+ expo-splash-screen used to tell the splash to stay visible until it has been told to hide. good for loading times and api calls 
+ expo-status-bar
+ expo-task-manager
+ expo-tracking-transparency usadd NSUserTrackingUsageDescription to your info.plist to explain how the user will be tracked. or it will be rejected by apple. 
+ expo-updates
+ expo-video
+ expo-video-thumbnails
+ react-native-pager-view
+
+ firebase cloud function example:
+
+        const functions = require('firebase-functions');
+        const admin = require('firebase-admin');
+        const { google } = require('googleapis');
+
+        admin.initializeApp();
+
+        const drive = google.drive('v3');
+
+        exports.uploadToGoogleDrive = functions.storage.object().onFinalize(async (object) => {
+        const bucket = admin.storage().bucket(object.bucket);
+        const file = bucket.file(object.name);
+
+        // Authenticate with Google Drive
+        const auth = new google.auth.GoogleAuth({
+            scopes: ['https://www.googleapis.com/auth/drive'], // Note: 'drive' scope for write access
+            keyFile: 'path/to/your/service-account-key.json',
+        });
+        const client = await auth.getClient();
+
+        // Download the photo from Firebase Storage
+        const fileData = await file.get();
+
+        // Process the photo (optional)
+        // ...
+
+        // Upload the photo to Google Drive
+        const driveFileMetadata = {
+            name: object.name,
+            parents: ['your-google-drive-folder-id'], // Replace with your folder ID
+        };
+        const uploadResponse = await drive.files.create({
+            resource: driveFileMetadata,
+            media: {
+            mimeType: 'image/jpeg', // Adjust based on your image type
+            body: fileData[0], // Photo data
+            },
+            auth: client,
+        });
+
+        // ... (Optional: Delete the photo from Firebase Storage)
+        });
+
+
+Service Types 
+wheatpasting
+wildposting
+pole_snipes
+pole_routes
+retail_style
+retail_pop
+retail_mmd
+street_stencils_c
+street_stencils_v
+street_stencils_w
+street_stencils_ra
+yard_signs
+door_hangers
+sign_spinners
+brand_am
+team_street
+
+

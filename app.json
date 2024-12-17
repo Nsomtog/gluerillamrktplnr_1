@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "gluerillamrktplnr_1",
-    "slug": "gluerillamrktplnr_1",
+    "name": "gluerilla-market-planner",
+    "slug": "gluerilla-market-planner",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "51113a52-551f-4845-903c-22470ece9121"
+      }
+    },
+    "owner": "gitntg"
   }
 }
